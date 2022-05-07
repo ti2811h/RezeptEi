@@ -1,0 +1,63 @@
+// https://www.edeka.de/rezepte/rezept/klassisches-ruehrei.jsp
+
+int eggs = 8;
+int ml_milk = 80;
+int mg_salt = 250;
+int mg_pepper = 250;
+int ml_tap_water = 30;
+int ml_oil = 30;
+
+Fork fork = new Fork();
+Bowl bowl = new Bowl();
+Pan pan = new Pan();
+Stove stove = new Stove();
+Spatula spatula = new Spatula();
+Plate plate = new Plate();
+
+bowl.beatEggs(eggs);
+
+repeat
+    fork.stir(bowl);
+until bowl.isHomogeneousMixture()
+
+bowl.put(ml_milk);
+bowl.put(mg_salt);
+bowl.put(mg_pepper);
+bowl.put(ml_tap_water);
+
+repeat
+    fork.stir(bowl)
+until bowl.isConcentrationGradientBalanced()
+
+pan.put(ml_oil);
+
+stove.put(pan);
+stove.setLevel(7);
+
+repeat
+   wait();
+until pan.getTemp() == 250
+
+pan.put(bowl.empty());
+stove.setLevel(5);
+
+repeat
+   wait();
+until pan.getContent().getConsistency == 20;
+
+i = 0
+repeat i < 4
+   spatula.setTurnDir(i); 
+   spatula.turn(pan.getContent());
+   i++;
+
+
+repeat
+   wait();
+until pan.getContent().getConsistency == 30;
+
+stove.remove(pan);
+stove.setLevel(0);
+plate.put(pan.empty());
+
+
